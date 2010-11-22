@@ -1,5 +1,4 @@
-module ApplicationHelper
-  
+module ApplicationHelper  
   # Retorna un título para la página HTML
   def title
     base_title = "Ruby on Rails Tutorial Sample App"
@@ -8,6 +7,10 @@ module ApplicationHelper
     else
       "#{base_title} | #{@title}"
     end
+  end
+  
+  def logo
+    image_tag "logo.png", :alt => "Sample App", :class => "round"
   end
   
 end
