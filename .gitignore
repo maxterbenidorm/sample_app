@@ -7,3 +7,4 @@ tmp/**/*
 *.swp
 doc/api
 doc/app
+*.log
