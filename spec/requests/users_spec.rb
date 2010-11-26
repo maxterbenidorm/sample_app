@@ -4,8 +4,7 @@ describe "Users" do
   
   describe "signup" do
     
-    describe "failrue" do
-      
+    describe "failure" do      
       it "should not make a new user" do
         lambda do
           get signup_path
@@ -17,12 +16,10 @@ describe "Users" do
           response.should render_template('users/new')
           response.should have_selector("div#error_explanation")
         end.should_not change(User,:count)
-      end
-      
+      end      
     end
     
-    describe "success" do
-            
+    describe "success" do            
       it "should make a new user" do
         lambda do
           get signup_path
@@ -35,10 +32,7 @@ describe "Users" do
           response.should have_selector("div.flash.success", :content => "Welcome")
           response.should
         end.should change(User,:count).by(1)
-      end
-      
-    end
-    
-  end
-  
+      end      
+    end    
+  end  
 end

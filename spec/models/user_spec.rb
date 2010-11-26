@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe User do
-  
   before :each do
     @attr = 
     { 
@@ -61,8 +60,7 @@ describe User do
     user_with_duplicate_email.should_not be_valid
   end
   
-  describe "password validations" do
-    
+  describe "password validations" do    
     it "should require a password" do
       User.new(@attr.merge(:password => "", :password_confirmation => "")).should_not be_valid
     end
@@ -81,12 +79,10 @@ describe User do
       long = "a" * 41
       hash = @attr.merge(:password => long, :password_confirmation => long)
       User.new(hash).should_not be_valid
-    end
-    
+    end    
   end
   
   describe "password encryption" do
-    
     before :each do
       @user = User.create!(@attr)
     end
@@ -100,7 +96,6 @@ describe User do
     end
     
     describe "has_password? method" do
-      
       it "should be true if the passwords match" do
         @user.has_password?(@attr[:password]).should be_true
       end
@@ -108,11 +103,9 @@ describe User do
       it "should be false if the passwords don't match" do
         @user.has_password?("invalid").should be_false
       end
-      
     end
     
     describe "authenticate method" do
-
       it "should return nil on email/password missmatch" do
         wrong_password_user = User.authenticate(@attr[:email], "wrongpass")
         wrong_password_user.should be_nil
@@ -127,9 +120,6 @@ describe User do
         matching_user = User.authenticate(@attr[:email], @attr[:password])
         matching_user.should == @user
       end
-
-    end
-    
-  end
-  
+    end    
+  end  
 end

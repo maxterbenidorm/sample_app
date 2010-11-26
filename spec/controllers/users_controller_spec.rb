@@ -13,12 +13,30 @@ describe UsersController do
       get :new
       response.should have_selector("title", :content => "Sign up")
     end
+    
+    it "should have a name field" do
+      get :new
+      response.should have_selector("input[name='user[name]'][type='text']")
+    end
+
+    it "should have an email field" do
+      get :new
+      response.should have_selector("input[name='user[email]'][type='text']")
+    end
+
+    it "should have a password field" do
+      get :new
+      response.should have_selector("input[name='user[password]'][type='password']")
+    end
+
+    it "should have a password confirmation field" do
+      get :new
+      response.should have_selector("input[name='user[password_confirmation]'][type='password']")
+    end
   end
   
-  describe "POST 'create'" do
-    
-    describe "failure" do
-      
+  describe "POST 'create'" do    
+    describe "failure" do      
       before :each do
         @attr = { :name => "", :email => "", 
                   :password => "", :password_confirmation => "" }
@@ -38,8 +56,7 @@ describe UsersController do
       it "should render the 'new' page" do
         post :create, :user => @attr
         response.should render_template('new')
-      end
-      
+      end      
     end
     
     describe "success" do
@@ -62,14 +79,11 @@ describe UsersController do
       it "should have a welcome message" do
         post :create, :user => @attr
         flash[:success].should =~ /welcome to the sample app/i
-      end
-      
-    end
-    
+      end      
+    end    
   end
   
-  describe "GET 'show'" do
-    
+  describe "GET 'show'" do    
     before :each do
       @user = Factory(:user)
     end
@@ -97,8 +111,6 @@ describe UsersController do
     it "should include a image profile" do
       get :show, :id => @user
       response.should have_selector("h1>img", :class => "gravatar")
-    end
-    
+    end    
   end
-
 end
