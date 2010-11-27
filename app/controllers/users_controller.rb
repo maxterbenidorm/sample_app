@@ -14,6 +14,7 @@ class UsersController < ApplicationController
     
     if @user.save then
       flash[:success] = "Welcome to the Sample App!"
+      sign_in @user
       redirect_to @user
     else
       @user.password = ""

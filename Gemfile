@@ -9,6 +9,7 @@ gem 'gravatar_image_tag'
 group :development do
   gem 'rspec-rails'
   gem 'annotate-models'
+  gem 'ruby-debug19', :require => 'ruby-debug'
 end
 
 group :test do
