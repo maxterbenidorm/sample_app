@@ -91,7 +91,7 @@ describe UsersController do
     end    
   end
   
-  describe "GET 'show'" do    
+  describe "GET 'show'" do
     before :each do
       @user = Factory(:user)
     end
@@ -278,12 +278,29 @@ describe UsersController do
         end
       end
       
+      it "should not have delete links" do
+        @users.each do |user|
+          response.should_not have_selector("a", :content => "delete")
+        end
+      end
+      
       it "should paginate users" do
         get :index
         response.should have_selector("div.pagination")
         response.should have_selector("span.disabled", :content => "Previous")
         response.should have_selector("a", :href => "/users?page=2", :content => "2")
         response.should have_selector("a", :href => "/users?page=2", :content => "Next")
+      end
+
+      describe "for admin users" do
+
+        it "should have delete links for each user" do
+          test_sign_in(Factory(:user, :email => "admin@example.org", :admin => true))
+          get :index
+          @users.each do |user|
+            response.should have_selector("a", :content => "delete")
+          end
+        end
       end
     end
   end
@@ -314,8 +331,8 @@ describe UsersController do
     describe "as an admin user" do
     
       before :each do
-        admin = Factory(:user, :email => "admin@example.com", :admin => true)
-        test_sign_in(admin)
+        @admin = Factory(:user, :email => "admin@example.com", :admin => true)
+        test_sign_in(@admin)
       end
       
       it "should destroy the user" do
@@ -328,7 +345,14 @@ describe UsersController do
         delete :destroy, :id => @user
         response.should redirect_to(users_path)
       end
+      
+      it "should not destroy himself" do
+        lambda do
+          delete :destroy, :id => @admin
+        end.should_not change(User, :count).by(-1)
+      end
     end
+
   end
   
 end
