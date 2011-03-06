@@ -2,7 +2,10 @@
 	<%= render 'shared/error_messages', :object => f.object %>
 	
 	<div class="field">
-		<%= f.text_area :content %>
+		<%= f.text_area :content, :oninput => "countMicropostLength()" %>
+		<p id="char_number">140</p>
+		<!-- Esta etiqueta script sirve para contar inicialmente los caracteres que hay en el textarea -->
+		<script type="text/javascript">countMicropostLength();</script>
 	</div>
 	
 	<div class="actions">
